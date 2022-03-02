@@ -8,41 +8,36 @@ import java.util.Scanner;
 public class Knight {
     public static void main(String[] args) {
         //declarations
-        int diagonalPos, horizontalPos;
-        Scanner scan = new Scanner(System.in);
+        final int BOARD_EDGE = 8;
 
-        //functionality
-        System.out.println("Input diagonal, and then horizontal position:");//asking user for input
-        diagonalPos = scan.nextInt();
-        horizontalPos = scan.nextInt();
+        Scanner scan = new Scanner(System.in);//scanner object
 
-        if((diagonalPos >= 1 && diagonalPos <= 8) && (horizontalPos >= 1 && horizontalPos <= 8)) {//Making sure input is legal
-            if (diagonalPos < 7 && diagonalPos > 2) {
-                if (horizontalPos < 7 && horizontalPos > 2) {
-                    System.out.println("Moves:");
-                    System.out.println((horizontalPos + 1) + (diagonalPos + 2));
-                    System.out.println((horizontalPos + 2) + (diagonalPos + 1));
-                    System.out.println((horizontalPos - 1) + (diagonalPos + 2));
-                    System.out.println((horizontalPos - 2) + (diagonalPos + 1));
-                    System.out.println((horizontalPos - 2) + (diagonalPos - 1));
-                    System.out.println((horizontalPos - 1) + (diagonalPos - 2));
-                    System.out.println((horizontalPos + 1) + (diagonalPos - 2));
-                    System.out.println((horizontalPos + 2) + (diagonalPos - 1));
-                } else if (horizontalPos == 7) {
-                    System.out.println("Moves:");
-                    System.out.println((horizontalPos + 1) + (diagonalPos + 2));
-                    System.out.println((horizontalPos + 2) + (diagonalPos + 1));
-                    System.out.println((horizontalPos - 1) + (diagonalPos + 2));
-                    System.out.println((horizontalPos - 2) + (diagonalPos + 1));
-                    System.out.println((horizontalPos - 2) + (diagonalPos - 1));
-                    System.out.println((horizontalPos - 1) + (diagonalPos - 2));
-                    System.out.println((horizontalPos + 1) + (diagonalPos - 2));
-                    System.out.println((horizontalPos + 2) + (diagonalPos - 1));
+        //asking user for input
+        System.out.println("This program reads two integers which " +
+                "represent the knight's location on the chess board: ");
+        System.out.println("Please enter the number of row");
+        int row = scan.nextInt();//row input
+        System.out.println("Please enter the number of column");
+        int col = scan.nextInt();//column input
 
-                }
-            }
-        }
-        else//if input is illegal, print error message and exit the program
-            System.out.println("input is illegal");
-    }
-}
+        //Making sure input is legal
+        if((col >= 1 && col <= 8) && (row >= 1 && row <= 8)) {
+            //dividing to scenarios
+
+            //scenario 1: all moves can be made
+            if ((col < 7 && col > 2) && (row < 7 && row > 2)) {
+                System.out.println("Moves:");
+                System.out.println((row + 1) + (col + 2));
+                System.out.println((row + 2) + (col + 1));
+                System.out.println((row - 1) + (col + 2));
+                System.out.println((row - 2) + (col + 1));
+                System.out.println((row - 2) + (col - 1));
+                System.out.println((row - 1) + (col - 2));
+                System.out.println((row + 1) + (col - 2));
+                System.out.println((row + 2) + (col - 1));
+            }//end of scenario 1
+        }//end of legal input check
+        else
+            System.out.println("input is illegal");//if input is illegal, print error message and exit the program
+    }//end of method main
+}//end of class Knight
