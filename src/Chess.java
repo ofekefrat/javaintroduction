@@ -1,5 +1,5 @@
 /*
-This class gets the following 3 parameters from the user, twice (one for each piece):
+This class gets the following 3 parameters from the user:
 1) type of chess piece
 2) row number
 3) column number
