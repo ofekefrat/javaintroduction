@@ -11,6 +11,7 @@ public class Chess {
     public static void main (String [] args) {
         //declarations
         int illegalPosition = 0;//flag for illegal position check
+        int threatFound = 0;
         final int LOW_BOUNDARY = 1;//assigning boundaries as constants
         final int HIGH_BOUNDARY = 8;
         String firstPieceName = "Unassigned";
@@ -68,14 +69,27 @@ public class Chess {
             if (illegalPosition == 0) {//checking the illegal position flag
                 if (!(row1 == row2 && col1 == col2)) {//unique position check
 
-                    if ((row1 == row2 || col1 == col2) && (first == 'r' || second == 'r')) {//rook threatens other piece
-                        if (first == 'r')
-                            System.out.println("rook threats " + secondPieceName);
-                        if (second == 'r')
-                            System.out.println("rook threats " + firstPieceName);
+                    if (first == 'r' || second == 'r') {
+                        if (row1 == row2 || col1 == col2) {//rook threatens other piece
+                            threatFound = 1;
+                            if (first == 'r')
+                                System.out.println("rook threats " + secondPieceName);
+                            if (second == 'r')
+                                System.out.println("rook threats " + firstPieceName);
+                        }
                     }
-                    //else if ()//bishop threatens other piece
-
+                    if (first == 'b' || second == 'b') {
+                        if ((col1 - row1 == col2 - row2) || (col1 + row1 == col2 + row2)) {//bishop threatens other piece
+                            threatFound = 1;
+                            if (first == 'b')
+                                System.out.println("bishop threats " + secondPieceName);
+                            if (second == 'b')
+                                System.out.println("bishop threats " + firstPieceName);
+                        }
+                    }
+                    if (first == 'k'|| second == 'k') {
+                        ;
+                    }
                 }//end of unique position check
                 else
                     System.out.println("Chessmen positions should not be identical");
