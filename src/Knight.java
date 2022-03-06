@@ -8,13 +8,11 @@ import java.util.Scanner;
 public class Knight {
     public static void main(String[] args) {
         //declarations
-        Scanner scan = new Scanner(System.in);//scanner object
         final int LOW_BOUNDARY = 1;//assigning boundaries as constants
         final int HIGH_BOUNDARY = 8;
-
-        //describing program to user
+        Scanner scan = new Scanner(System.in);//scanner object
         System.out.println("This program reads two integers which " +
-                "represent the knight's location on the chess board: ");
+                "represent the knight's location on the chess board: ");//describing program to user
         //asking user for input
         System.out.println("Please enter the number of row");
         int row = scan.nextInt();//row input
