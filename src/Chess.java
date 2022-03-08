@@ -35,11 +35,11 @@ public class Chess {
         }
         System.out.println("Please enter the number of row");
         int row1 = scan.nextInt();//row input
-        if (row1 < 1 || row1 > 8)//checking for illegal position assignment
+        if (row1 < LOW_BOUNDARY || row1 > HIGH_BOUNDARY)//checking for illegal position assignment
             illegalPosition = 1;
         System.out.println("Please enter the number of column");
         int col1 = scan.nextInt();//column input
-        if (col1 < 1 || col1 > 8)
+        if (col1 < LOW_BOUNDARY || col1 > HIGH_BOUNDARY)
             illegalPosition = 1;
 
         //second chess piece
@@ -88,56 +88,7 @@ public class Chess {
                         }
                     }
                     if (first == 'k' || second == 'k') {//knight threatens other piece
-                        if (row1+2 == row2 && col1+1 == col2) {
-                            threatFound = 1;
-                            if (first == 'k')
-                                System.out.println("knight threats " + secondPieceName);
-                            else
-                                System.out.println("knight threats " + firstPieceName);
-                        }
-                        else if (row1+1 == row2 && col1+2 == col2) {
-                            threatFound = 1;
-                            if (first == 'k')
-                                System.out.println("knight threats " + secondPieceName);
-                            else
-                                System.out.println("knight threats " + firstPieceName);
-                        }
-                        else if (row1-1 == row2 && col1+2 == col2) {
-                            threatFound = 1;
-                            if (first == 'k')
-                                System.out.println("knight threats " + secondPieceName);
-                            else
-                                System.out.println("knight threats " + firstPieceName);
-                        }
-                        else if (row1-2 == row2 && col1+1 == col2) {
-                            threatFound = 1;
-                            if (first == 'k')
-                                System.out.println("knight threats " + secondPieceName);
-                            else
-                                System.out.println("knight threats " + firstPieceName);
-                        }
-                        else if (row1-2 == row2 && col1-1 == col2) {
-                            threatFound = 1;
-                            if (first == 'k')
-                                System.out.println("knight threats " + secondPieceName);
-                            else
-                                System.out.println("knight threats " + firstPieceName);
-                        }
-                        else if (row1-1 == row2 && col1-2 == col2) {
-                            threatFound = 1;
-                            if (first == 'k')
-                                System.out.println("knight threats " + secondPieceName);
-                            else
-                                System.out.println("knight threats " + firstPieceName);
-                        }
-                        else if (row1+1 == row2 && col1-2 == col2) {
-                            threatFound = 1;
-                            if (first == 'k')
-                                System.out.println("knight threats " + secondPieceName);
-                            else
-                                System.out.println("knight threats " + firstPieceName);
-                        }
-                        else if (row1+2 == row2 && col1-1 == col2) {
+                        if ((Math.abs(row1-row2) == 2 && Math.abs(col1-col2) == 1) || (Math.abs(row1-row2) == 1 && Math.abs(col1-col2) == 2)) {
                             threatFound = 1;
                             if (first == 'k')
                                 System.out.println("knight threats " + secondPieceName);
