@@ -1,4 +1,4 @@
-/*
+package unit1;/*
 This program receives 3 coordinates, which are the points of a triangle,
 and determines whether this triangle is an equilateral triangle, an isosceles triangle,
 or just a regular one, which is none of those two.

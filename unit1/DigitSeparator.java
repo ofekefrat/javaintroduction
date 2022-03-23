@@ -1,3 +1,5 @@
+package unit1;
+
 import java.util.Scanner;
 public class DigitSeparator {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-/*
+package unit1;/*
 This class calculates a course's cost based on the following 4 INTS received from the user:
 
 1) Number of points that the student has gathered:
