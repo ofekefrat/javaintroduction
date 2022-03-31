@@ -1,5 +1,5 @@
 /**
- * Represents a flight.
+ * Represents a flight object.
  * @author Ofek Efrat
  * @version 30/03/22
  */
@@ -15,23 +15,24 @@ public class Flight {
     private boolean _isFull;
 
     //constructors
-    public Flight(String origin, String destination, int depHour, int depMinute, int flightDuration, int noOfPassengers, int price) {
-        _departure = new Time1(depHour, depMinute);// using a different Time1 constructor from the one in setter method.
-        this.setOrigin(origin);
-        this.setDestination(destination);
-        this.setFlightDuration(flightDuration);
-        this.setPrice(price);
-        this.setNoOfPassengers(noOfPassengers);
+    public Flight(String origin, String dest, int depHour, int depMinute,
+                  int depTimeMinutes, int noOfPass, int price) {
+        this._departure = new Time1(depHour, depMinute);
+        this._origin = origin;
+        this._destination = dest;
+        this._flightDuration = Math.max(depTimeMinutes, MIN_VAL);
+        this._price = Math.max(price, MIN_VAL);
+        if (noOfPass>=MAX_CAPACITY) setNoOfPassengers(MAX_CAPACITY);
     }
 
     public Flight(Flight other) { //copy constructor
-        _origin = other.getOrigin();
-        _destination = other.getDestination();
-        _departure = new Time1(other.getDeparture());
-        _flightDuration = other.getFlightDuration();
-        _noOfPassengers = other.getNoOfPassengers();
-        _price = other.getPrice();
-        _isFull = other.getIsFull();
+        this._origin = other.getOrigin();
+        this._destination = other.getDestination();
+        this._departure = new Time1(other.getDeparture());
+        this._flightDuration = other.getFlightDuration();
+        this._noOfPassengers = other.getNoOfPassengers();
+        this._price = other.getPrice();
+        this._isFull = other.getIsFull();
     }
 
     //methods
@@ -86,11 +87,8 @@ public class Flight {
     }
 
     public void setNoOfPassengers(int noOfPassengers) {
-        _noOfPassengers = Math.max(noOfPassengers, MIN_VAL);
-        if (noOfPassengers>=MAX_CAPACITY) {
-            _noOfPassengers = MAX_CAPACITY;
-            _isFull = true;
-        }
+        if (noOfPassengers <= MAX_CAPACITY) _noOfPassengers = noOfPassengers;
+        if (noOfPassengers == MAX_CAPACITY) _isFull = true;
     }
 
     public void setPrice(int price) {
