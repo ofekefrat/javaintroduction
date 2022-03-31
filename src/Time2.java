@@ -1,5 +1,5 @@
 /**
- * Represents a time object, with total minute amount implementation.
+ * Represents time - hours:minutes. Values must represent a proper time.
  * @author Ofek Efrat
  * @version 30/03/22
  */
@@ -17,16 +17,16 @@ public class Time2 {
     /**
      * Constructs a Time1 object. Construct a new time instance with the specified hour and minute.
      * hour should be between 0-23, otherwise it should be set to 0.
-     * minute should be between 0-59, otherwise it should be set to 0.
+     * minute should be between 0-59, otherwise they should be set to 0.
      * @param h the hour of the time.
      * @param m the minute of the time.
      */
     public Time2(int h, int m) {
-        _minFromMid = 0;
-        if (h>=DEFAULT_HOUR && h<HOURS_IN_DAY)//
-            _minFromMid += h*MINUTES_IN_HOUR;
+        this._minFromMid = 0;
+        if (h>=DEFAULT_HOUR && h<HOURS_IN_DAY)
+            this._minFromMid += h*MINUTES_IN_HOUR;
         if (m>=DEFAULT_MINUTE && m<MINUTES_IN_HOUR)
-            _minFromMid += m;
+            this._minFromMid += m;
     }
 
     /**
@@ -34,7 +34,7 @@ public class Time2 {
      * @param other The time object from which to construct the new time
      */
     public Time2(Time2 other) {
-        _minFromMid = other.minFromMidnight();
+        this._minFromMid = other.minFromMidnight();
     }
 
 
@@ -44,7 +44,7 @@ public class Time2 {
      * @return The hour of the time.
      */
     public int getHour() {
-        return (_minFromMid / MINUTES_IN_HOUR) % HOURS_IN_DAY;
+        return (_minFromMid / MINUTES_IN_HOUR) % HOURS_IN_DAY;// get the number of hours from total minutes
     }
 
     /**
@@ -52,7 +52,7 @@ public class Time2 {
      * @return The minute of the time.
      */
     public int getMinute() {
-        return _minFromMid % MINUTES_IN_HOUR;
+        return _minFromMid % MINUTES_IN_HOUR;// get the number of minutes in current hour
     }
 
     /**
@@ -60,7 +60,7 @@ public class Time2 {
      * @param num The new hour
      */
     public void setHour(int num) {
-        if (num>=0) _minFromMid = num*MINUTES_IN_HOUR + this.getMinute();
+        if (num>=0) this._minFromMid = num*MINUTES_IN_HOUR + this.getMinute();
     }
 
     /**
@@ -68,7 +68,7 @@ public class Time2 {
      * @param num The new minute
      */
     public void setMinute(int num) {
-        if (num>=0) _minFromMid = this.getHour()*MINUTES_IN_HOUR + num;
+        if (num>=0) this._minFromMid = this.getHour()*MINUTES_IN_HOUR + num;
     }
 
     /**

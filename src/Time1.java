@@ -23,8 +23,8 @@ public class Time1 {
      * @param m the minute of the time.
      */
     public Time1(int h, int m) {
-        this.setHour(h); // if (num>=DEFAULT_HOUR && num<HOURS_IN_DAY) _hour = num;
-        this.setMinute(m); // if (num>=DEFAULT_MINUTE && num<MINUTES_IN_HOUR) _minute = num;
+        if (h>=DEFAULT_HOUR && h<HOURS_IN_DAY) this._hour = h;
+        if (m>=DEFAULT_MINUTE && m<MINUTES_IN_HOUR) this._minute = m;
     }
 
     /**
@@ -57,7 +57,7 @@ public class Time1 {
      * @param num The new hour
      */
     public void setHour(int num) {
-        if (num>=DEFAULT_HOUR && num<HOURS_IN_DAY) _hour = num;
+        if (num>=DEFAULT_HOUR && num<HOURS_IN_DAY) this._hour = num;
     }
 
     /**
@@ -65,7 +65,7 @@ public class Time1 {
      * @param num The new minute
      */
     public void setMinute(int num) {
-        if (num>=DEFAULT_MINUTE && num<MINUTES_IN_HOUR) _minute = num;
+        if (num>=DEFAULT_MINUTE && num<MINUTES_IN_HOUR) this._minute = num;
     }
 
     /**
@@ -83,7 +83,7 @@ public class Time1 {
      * @return amount of minutes since midnight.
      */
     public int minFromMidnight() {
-        return _hour * MINUTES_IN_HOUR + _minute;
+        return _hour*MINUTES_IN_HOUR + _minute;
     }
     /**
      * Check if the received time is equal to this time.
