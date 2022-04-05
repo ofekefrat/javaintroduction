@@ -47,13 +47,14 @@ public class Flight {
      * @param other The Flight object from which to construct the new flight.
      */
     public Flight(Flight other) {
-        this._origin = other.getOrigin();
-        this._destination = other.getDestination();
-        this._departure = new Time1(other.getDeparture());
-        this._flightDuration = other.getFlightDuration();
-        this._noOfPassengers = other.getNoOfPassengers();
-        this._price = other.getPrice();
-        this._isFull = other.getIsFull();
+        this(other._origin,
+            other._destination,
+            other._departure.getHour(),
+            other._departure.getMinute(),
+            other._flightDuration,
+            other._noOfPassengers,
+            other._price);
+        this._isFull = other._isFull;
     }
 
     //methods
@@ -164,7 +165,6 @@ public class Flight {
      */
     public void setNoOfPassengers(int noOfPass) {
         if (noOfPass>= MIN_VAL && noOfPass <= MAX_CAPACITY) this._noOfPassengers = noOfPass;
-        this._isFull = (_noOfPassengers == MAX_CAPACITY);
     }
 
     /**
@@ -197,6 +197,7 @@ public class Flight {
     public boolean addPassengers(int num) {
         if (_noOfPassengers + num <= MAX_CAPACITY) {
             this.setNoOfPassengers(_noOfPassengers+num);
+            this._isFull = true;
             return true;
         }
         else
@@ -227,12 +228,7 @@ public class Flight {
      * @return True if this flight arrives before the received flight.
      */
     public boolean landsEarlier(Flight other) {
-        // cannot use addMinutes methods from either time class,
-        // because it will not take into account the passing of a day.
-        int tempThis = _departure.minFromMidnight() + _flightDuration;// the absolute landing time, including the day.
-        int tempOther = other.getDeparture().minFromMidnight() + other.getFlightDuration();
-        int early = Math.min(tempOther, tempThis);
-        return early == tempThis;
+        return this.getArrivalTime().before(other.getArrivalTime());
     }
 
     /**
