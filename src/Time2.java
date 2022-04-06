@@ -60,7 +60,7 @@ public class Time2 {
      * @param num The new hour
      */
     public void setHour(int num) {
-        if (num>=0) this._minFromMid = num*MINUTES_IN_HOUR + this.getMinute();
+        if (num>=DEFAULT_HOUR && num<HOURS_IN_DAY) this._minFromMid = num*MINUTES_IN_HOUR + this.getMinute();
     }
 
     /**
@@ -68,7 +68,7 @@ public class Time2 {
      * @param num The new minute
      */
     public void setMinute(int num) {
-        if (num>=0) this._minFromMid = this.getHour()*MINUTES_IN_HOUR + num;
+        if (num>=DEFAULT_MINUTE && num<MINUTES_IN_HOUR) this._minFromMid = this.getHour()*MINUTES_IN_HOUR + num;
     }
 
     /**
@@ -131,7 +131,11 @@ public class Time2 {
      * @return new update Time2 object.
      */
     public Time2 addMinutes(int num) {
-        int tempT = (_minFromMid+num);// total minutes after change
+        int tempT;
+        if (num<0)
+            tempT = (_minFromMid + (num % (-MINUTES_IN_HOUR*HOURS_IN_DAY)));
+        else
+            tempT = (_minFromMid + (num % (MINUTES_IN_HOUR*HOURS_IN_DAY)));
         return new Time2((tempT/MINUTES_IN_HOUR) % HOURS_IN_DAY, tempT % MINUTES_IN_HOUR);// convert minutes back to hours and minutes, assign to new instance
     }
 }
