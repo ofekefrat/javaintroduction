@@ -165,6 +165,7 @@ public class Flight {
      */
     public void setNoOfPassengers(int noOfPass) {
         if (noOfPass>= MIN_VAL && noOfPass <= MAX_CAPACITY) this._noOfPassengers = noOfPass;
+        this._isFull = (_noOfPassengers == MAX_CAPACITY);
     }
 
     /**
@@ -197,7 +198,7 @@ public class Flight {
     public boolean addPassengers(int num) {
         if (_noOfPassengers + num <= MAX_CAPACITY) {
             this.setNoOfPassengers(_noOfPassengers+num);
-            this._isFull = true;
+//            this._isFull = true;
             return true;
         }
         else
@@ -238,7 +239,7 @@ public class Flight {
      */
     @Override
     public String toString() {
-        String tempF = (_isFull) ? "full" : "not full";
+        String tempF = (_isFull) ? "full." : "not full.";
         return ("Flight from " + _origin + " to " + _destination + " departs at " + _departure + ". Flight is " + tempF);
     }
 }
