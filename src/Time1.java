@@ -128,11 +128,13 @@ public class Time1 {
      */
     public Time1 addMinutes(int num) {
         int tempT;
-        if (num<0)
-            tempT = (this.minFromMidnight() + (num % (-MINUTES_IN_HOUR*HOURS_IN_DAY)));
+        if (num<0) {
+            tempT = (this.minFromMidnight() + (num % (-MINUTES_IN_HOUR * HOURS_IN_DAY)));
+            if (tempT < 0)
+                tempT = (MINUTES_IN_HOUR*HOURS_IN_DAY + tempT);
+        }
         else
             tempT = (this.minFromMidnight() + (num % (MINUTES_IN_HOUR*HOURS_IN_DAY)));
-
         return new Time1((tempT/MINUTES_IN_HOUR) % HOURS_IN_DAY, tempT % MINUTES_IN_HOUR);// convert minutes back to hours and minutes, assign to new instance
     }
 }
