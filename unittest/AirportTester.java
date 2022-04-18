@@ -306,7 +306,7 @@ public class AirportTester {
         assertFalse(flightBoardTokyo.removeFlight(flight14));
         assertFalse(flightBoardTokyo.removeFlight(flight27));
 
-        // those flights were never on board on the first place
+        // those flights were never on board in the first place
         assertFalse(flightBoardTokyo.removeFlight(flight4));
         assertFalse(flightBoardTokyo.removeFlight(flight7));
         assertFalse(flightBoardTokyo.removeFlight(flight9));
@@ -348,7 +348,7 @@ public class AirportTester {
         assertFalse(flight22.getDeparture().equals(flightBoardTelAviv.firstFlightFromOrigin("Tel-aviv")));
         assertFalse(flight14.getDeparture().equals(flightBoardTokyo.firstFlightFromOrigin("Tokyo")));
 
-        // String parameter is not origin of any of the flights, therefore resulting in null
+        // String parameter is not the origin of any flight, therefore resulting in null
         assertNull(flightBoardMilan.firstFlightFromOrigin("New-York"));
         assertNull(flightBoardTelAviv.firstFlightFromOrigin("Tokyo"));
         assertNull(flightBoardMilan.firstFlightFromOrigin("Paris"));
@@ -399,29 +399,37 @@ public class AirportTester {
         // tokyo and berlin share the same number, tokyo is before though
         flightBoardTokyo.removeFlight(flight28);
         assertEquals("Berlin", flightBoardTokyo.mostPopularDestination());
+        Airport airportNone = new Airport("Tel-Aviv");
+        assertNull(airportNone.mostPopularDestination());
+        airportNone.addFlight(flight11);
+        airportNone.addFlight(flight12);
+        airportNone.addFlight(flight1);
+        airportNone.addFlight(flight6);
+        airportNone.mostPopularDestination();
+//        assertEquals("London", airportNone.mostPopularDestination());
 
     }
 
-//    @Test
-//    @DisplayName("mostExpensiveTicket")
-//    public void mostExpensiveTicketMethod(){
-//
-//        assertEquals(flight5.getPrice(), flightBoardMilan.mostExpensiveTicket().getPrice());
-//        assertEquals(flight6.getPrice(), flightBoardTelAviv.mostExpensiveTicket().getPrice());
-//        assertEquals(flight14.getPrice(), flightBoardTokyo.mostExpensiveTicket().getPrice());
-//
-//
-//    }
-//
-//    @Test
-//    @DisplayName("longestFlight")
-//    public void longestFlightMethod(){
-//
-//        assertEquals(flight5.getFlightDuration(), flightBoardMilan.longestFlight().getFlightDuration());
-//        assertEquals(flight6.getFlightDuration(), flightBoardTelAviv.longestFlight().getFlightDuration());
-//        assertEquals(flight15.getFlightDuration(), flightBoardTokyo.longestFlight().getFlightDuration());
-//
-//    }
+    @Test
+    @DisplayName("mostExpensiveTicket")
+    public void mostExpensiveTicketMethod(){
+
+        assertEquals(flight5.getPrice(), flightBoardMilan.mostExpensiveTicket().getPrice());
+        assertEquals(flight6.getPrice(), flightBoardTelAviv.mostExpensiveTicket().getPrice());
+        assertEquals(flight14.getPrice(), flightBoardTokyo.mostExpensiveTicket().getPrice());
+
+
+    }
+
+    @Test
+    @DisplayName("longestFlight")
+    public void longestFlightMethod(){
+
+        assertEquals(flight5.getFlightDuration(), flightBoardMilan.longestFlight().getFlightDuration());
+        assertEquals(flight6.getFlightDuration(), flightBoardTelAviv.longestFlight().getFlightDuration());
+        assertEquals(flight15.getFlightDuration(), flightBoardTokyo.longestFlight().getFlightDuration());
+
+    }
 
     @Test
     @DisplayName("toString")
@@ -429,37 +437,43 @@ public class AirportTester {
 
         // this toStringMethod check expects another *empty* line to be printed after board shows
 
-        assertEquals(flightBoardMilan.toString(), "The flights for airport Milan today are:\n" +
-                "Flight from Madrid to Milan departs at 08:20. Flight is not full.\n" +
-                "Flight from Milan to Paris departs at 11:55. Flight is not full.\n" +
-                "Flight from Milan to Tokyo departs at 07:00. Flight is full.\n" +
-                "Flight from Madrid to Milan departs at 09:30. Flight is not full.\n" +
-                "Flight from Milan to London departs at 05:45. Flight is full.\n" +
-                "Flight from Stockholm to Milan departs at 02:55. Flight is full.\n" +
-                "Flight from Cape Town to Milan departs at 05:40. Flight is not full.\n" +
-                "Flight from Milan to Tel-aviv departs at 15:45. Flight is full.\n" +
-                "Flight from Istanbul to Milan departs at 06:50. Flight is full.\n");
+        assertEquals(flightBoardMilan.toString(), """
+                The flights for airport Milan today are:
+                Flight from Madrid to Milan departs at 08:20. Flight is not full.
+                Flight from Milan to Paris departs at 11:55. Flight is not full.
+                Flight from Milan to Tokyo departs at 07:00. Flight is full.
+                Flight from Madrid to Milan departs at 09:30. Flight is not full.
+                Flight from Milan to London departs at 05:45. Flight is full.
+                Flight from Stockholm to Milan departs at 02:55. Flight is full.
+                Flight from Cape Town to Milan departs at 05:40. Flight is not full.
+                Flight from Milan to Tel-aviv departs at 15:45. Flight is full.
+                Flight from Istanbul to Milan departs at 06:50. Flight is full.
+                """);
 
         assertEquals(flightBoardTelAviv.toString(),
-                "The flights for airport Tel-aviv today are:\n" +
-                        "Flight from Amsterdam to Tel-aviv departs at 01:05. Flight is full.\n" +
-                        "Flight from New-York to Tel-aviv departs at 02:25. Flight is full.\n" +
-                        "Flight from Tel-aviv to Bucharest departs at 15:15. Flight is full.\n" +
-                        "Flight from Tel-aviv to Barcelona departs at 06:35. Flight is not full.\n" +
-                        "Flight from Amsterdam to Tel-aviv departs at 14:30. Flight is not full.\n" +
-                        "Flight from Prague to Tel-aviv departs at 20:35. Flight is not full.\n" +
-                        "Flight from Tel-aviv to New Delhi departs at 16:10. Flight is full.\n" +
-                        "Flight from Bangkok to Tel-aviv departs at 13:30. Flight is full.\n" +
-                        "Flight from Milan to Tel-aviv departs at 15:45. Flight is full.\n");
+                """
+                        The flights for airport Tel-aviv today are:
+                        Flight from Amsterdam to Tel-aviv departs at 01:05. Flight is full.
+                        Flight from New-York to Tel-aviv departs at 02:25. Flight is full.
+                        Flight from Tel-aviv to Bucharest departs at 15:15. Flight is full.
+                        Flight from Tel-aviv to Barcelona departs at 06:35. Flight is not full.
+                        Flight from Amsterdam to Tel-aviv departs at 14:30. Flight is not full.
+                        Flight from Prague to Tel-aviv departs at 20:35. Flight is not full.
+                        Flight from Tel-aviv to New Delhi departs at 16:10. Flight is full.
+                        Flight from Bangkok to Tel-aviv departs at 13:30. Flight is full.
+                        Flight from Milan to Tel-aviv departs at 15:45. Flight is full.
+                        """);
 
-        assertEquals(flightBoardTokyo.toString(),"The flights for airport Tokyo today are:\n" +
-                "Flight from Milan to Tokyo departs at 07:00. Flight is full.\n" +
-                "Flight from Tokyo to Paris departs at 23:20. Flight is not full.\n" +
-                "Flight from Tokyo to Berlin departs at 16:50. Flight is full.\n" +
-                "Flight from Tokyo to Seoul departs at 04:25. Flight is not full.\n" +
-                "Flight from Tokyo to Madrid departs at 19:20. Flight is full.\n" +
-                "Flight from Tokyo to Berlin departs at 18:05. Flight is not full.\n" +
-                "Flight from Moscow to Tokyo departs at 14:00. Flight is not full.\n");
+        assertEquals(flightBoardTokyo.toString(), """
+                The flights for airport Tokyo today are:
+                Flight from Milan to Tokyo departs at 07:00. Flight is full.
+                Flight from Tokyo to Paris departs at 23:20. Flight is not full.
+                Flight from Tokyo to Berlin departs at 16:50. Flight is full.
+                Flight from Tokyo to Seoul departs at 04:25. Flight is not full.
+                Flight from Tokyo to Madrid departs at 19:20. Flight is full.
+                Flight from Tokyo to Berlin departs at 18:05. Flight is not full.
+                Flight from Moscow to Tokyo departs at 14:00. Flight is not full.
+                """);
     }
 
 
