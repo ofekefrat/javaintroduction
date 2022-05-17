@@ -1,7 +1,8 @@
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
 
 /**
  * Tester for Airport class
@@ -9,16 +10,34 @@ import org.junit.jupiter.api.Test;
  * NOTE: TESTER TESTS AIRPORT METHODS, NOT ANY OTHER CLASSES!
  * NOTE: ANY INCORRECT METHODS BUILT IN FLIGHT OR TIME1 CLASSES MAY AND WILL RESULT IN FAILURE ON THIS TEST.
  *
- * @author  Leon Piatti
- * @version 5.4.2022
+ * @author  Leon Piatti\Daniel Wong\Yoav
+ * @version 21.4.2022
+ */
+
+/* Copy the method to Airport class! - Just for testing, do not forget to delete before submitting the mman.
+
+public Flight[] getFlightsSchedule() {
+return _flightsSchedule; // It's makes aliasing on purpose
+}
+
+public int getNoOfFlights() {
+return _noOfFlights;
+}
+
+public String getCity() {
+return _city;
+}
+
  */
 
 public class AirportTester {
-
+    private Flight _flight31, _flight32, _flight33, _flight34, _flight35;
+    Flight[] _flightsScheduleAns;
+    private final int MAX_FLIGHTS = 200;
+    private Airport _hongKongAirport;
     private Airport flightBoardMilan, flightBoardTelAviv, flightBoardTokyo;
     private Flight flight1, flight2, flight3, flight4, flight5, flight6, flight7, flight8, flight9, flight10, flight11, flight12, flight13, flight14, flight15;
     private Flight flight16, flight17, flight18, flight19, flight20, flight21, flight22, flight23, flight24, flight25, flight26, flight27, flight28, flight29, flight30;
-
 
     @BeforeEach
     public void setUp(){
@@ -52,7 +71,6 @@ public class AirportTester {
         flight28 = new Flight("Moscow", "Tokyo", 14, 0, 690, 198, 864); // Tokyo7
         flight29 = new Flight("Istanbul", "Milan", 6, 50, 162, 250, 140); // Milan9
         flight30 = new Flight("Porto", "Madrid", 8, 25, 105, 300, 186);
-
 
         // initializing Airport objects & and filling arrays
         // Milan Airport
@@ -157,6 +175,21 @@ public class AirportTester {
         flightBoardTokyo.addFlight(flight29);
         flightBoardTokyo.addFlight(flight30);
 
+        _flightsScheduleAns = new Flight[200];
+        _flight31 = new Flight("Hong-Kong", "Dubai", 8, 1, 10, 250, 300);
+        _flight32 = new Flight("Amsterdam", "Hong-Kong", 1, 15, 300, 240, 300);
+        _flight33 = new Flight("Hong-Kong", "London", 1, 10, 1, 1, 500);
+        _flight34 = new Flight("Hong-Kong", "Dubai", 1, 10, 1, 1, 500);
+        _flight35 = new Flight("Hong-Kong", "Tel-Aviv", 1, 11, 1, 1, 500);
+        _hongKongAirport = new Airport("Hong-Kong");
+    }
+
+    @Test
+    @DisplayName("Testing constructor")
+    public void constructor() {
+        assertTrue(equalFlightsSchedule(_hongKongAirport.getFlightsSchedule(), _flightsScheduleAns), "_flightsSchedule should be initialized with only null in his cell.");
+        assertEquals(0, _hongKongAirport.getNoOfFlights(), "_noOfFlights should be initialized to zero.");
+        assertEquals("Hong-Kong", _hongKongAirport.getCity());
     }
 
     @Test
@@ -216,7 +249,20 @@ public class AirportTester {
         assertFalse(flightBoardTokyo.addFlight(flight22));
         assertFalse(flightBoardTokyo.addFlight(flight25));
 
-
+        _flightsScheduleAns[0] = _flight31;
+        _hongKongAirport.addFlight(_flight31);
+        assertTrue(equalFlightsSchedule(_hongKongAirport.getFlightsSchedule(), _flightsScheduleAns), "Didn't add the flight or didn't add the flight on the right place.");
+        assertEquals(1, _hongKongAirport.getNoOfFlights());
+        assertNotSame(_hongKongAirport.getFlightsSchedule()[0], _flight31, "There is an aliasing");
+        assertTrue(_hongKongAirport.addFlight(_flight31));
+        assertFalse(_hongKongAirport.addFlight(new Flight("a", "a", 1, 1, 1, 1, 1)));
+        hongKongAirport();
+        resetFlightsSchedule();
+        for (int i = 0; i < MAX_FLIGHTS; i++) {
+            _hongKongAirport.addFlight(_flight31);
+            _flightsScheduleAns[i] = _flight31;
+        }
+        assertFalse(_hongKongAirport.addFlight(_flight31));
 
     }
 
@@ -306,7 +352,7 @@ public class AirportTester {
         assertFalse(flightBoardTokyo.removeFlight(flight14));
         assertFalse(flightBoardTokyo.removeFlight(flight27));
 
-        // those flights were never on board in the first place
+        // those flights were never on board on the first place
         assertFalse(flightBoardTokyo.removeFlight(flight4));
         assertFalse(flightBoardTokyo.removeFlight(flight7));
         assertFalse(flightBoardTokyo.removeFlight(flight9));
@@ -315,7 +361,25 @@ public class AirportTester {
         assertFalse(flightBoardTokyo.removeFlight(flight22));
         assertFalse(flightBoardTokyo.removeFlight(flight25));
 
-
+        assertFalse(_hongKongAirport.removeFlight(_flight31));
+        makeFullAirport();
+        makeFullFlightsScheduleAns();
+        _flightsScheduleAns[MAX_FLIGHTS - 1] = null;
+        assertEquals(200, _hongKongAirport.getNoOfFlights());
+        assertTrue(_hongKongAirport.removeFlight(_flight31));
+        assertEquals(199, _hongKongAirport.getNoOfFlights());
+        assertTrue(equalFlightsSchedule(_hongKongAirport.getFlightsSchedule(), _flightsScheduleAns), "Did not remove or remove more than one or did not fix the empty cell problem.");
+        hongKongAirport();
+        resetFlightsSchedule();
+        _flightsScheduleAns[0] = _flight31;
+        _flightsScheduleAns[1] = _flight32;
+        _flightsScheduleAns[2] = _flight33;
+        _hongKongAirport.addFlight(_flight31);
+        _hongKongAirport.addFlight(_flight32);
+        _hongKongAirport.addFlight(_flight32);
+        _hongKongAirport.addFlight(_flight33);
+        _hongKongAirport.removeFlight(_flight32);
+        assertTrue(equalFlightsSchedule(_hongKongAirport.getFlightsSchedule(), _flightsScheduleAns), "Probably you took the last flight and put it in the empty place. doesn't recommend.");
     }
 
     @Test
@@ -348,12 +412,22 @@ public class AirportTester {
         assertFalse(flight22.getDeparture().equals(flightBoardTelAviv.firstFlightFromOrigin("Tel-aviv")));
         assertFalse(flight14.getDeparture().equals(flightBoardTokyo.firstFlightFromOrigin("Tokyo")));
 
-        // String parameter is not the origin of any flight, therefore resulting in null
+        // String parameter is not origin of any of the flights, therefore resulting in null
         assertNull(flightBoardMilan.firstFlightFromOrigin("New-York"));
         assertNull(flightBoardTelAviv.firstFlightFromOrigin("Tokyo"));
         assertNull(flightBoardMilan.firstFlightFromOrigin("Paris"));
 
-
+        hongKongAirport();
+        assertNull(_hongKongAirport.firstFlightFromOrigin("A"));
+        _hongKongAirport.addFlight(_flight31);
+        assertTrue(_hongKongAirport.firstFlightFromOrigin("Hong-Kong").equals(_flight31.getDeparture()));
+        makeFullAirport();
+        _hongKongAirport.removeFlight(_flight31);
+        _hongKongAirport.addFlight(_flight34);
+        assertTrue(_hongKongAirport.firstFlightFromOrigin(_flight31.getOrigin()).equals(_flight34.getDeparture()));
+        _hongKongAirport.removeFlight(_flight31);
+        _hongKongAirport.addFlight(_flight35);
+        assertTrue(_hongKongAirport.firstFlightFromOrigin("Hong-Kong").equals(_flight34.getDeparture()));
 
     }
 
@@ -374,6 +448,18 @@ public class AirportTester {
         assertEquals(5,flightBoardTelAviv.howManyFullFlights());
         assertEquals(2,flightBoardTokyo.howManyFullFlights());
 
+        resetFlightsSchedule();
+        hongKongAirport();
+        // testing when flightsSchedule is empty
+        assertEquals(0, _hongKongAirport.howManyFullFlights(), "Should be null because flightSchedule is empty.");
+        // some random tests
+        _hongKongAirport.addFlight(_flight33);
+        assertEquals(0, _hongKongAirport.howManyFullFlights(), "Should be 0 because there is no full flight.");
+        _hongKongAirport.addFlight(_flight31);
+        assertEquals(1, _hongKongAirport.howManyFullFlights());
+        hongKongAirport();
+        makeFullAirport();
+        assertEquals(200, _hongKongAirport.howManyFullFlights());
 
     }
 
@@ -385,8 +471,24 @@ public class AirportTester {
         assertEquals(2,flightBoardTelAviv.howManyFlightsBetween("Amsterdam"));
         assertEquals(1,flightBoardTokyo.howManyFlightsBetween("Paris"));
         assertEquals(2,flightBoardTokyo.howManyFlightsBetween("Berlin"));
-
-
+        
+        hongKongAirport();
+        assertEquals(0, _hongKongAirport.howManyFlightsBetween("A"));
+        _hongKongAirport.addFlight(_flight32);
+        _hongKongAirport.addFlight(_flight31);
+        _hongKongAirport.addFlight(_flight33);
+        _hongKongAirport.addFlight(_flight33);
+        _hongKongAirport.addFlight(_flight33);
+        _hongKongAirport.addFlight(_flight31);
+        _hongKongAirport.addFlight(_flight32);
+        _hongKongAirport.addFlight(_flight32);
+        assertEquals(3, _hongKongAirport.howManyFlightsBetween("London"));
+        assertEquals(3, _hongKongAirport.howManyFlightsBetween("Amsterdam"));
+        makeFullAirport();
+        assertEquals(194, _hongKongAirport.howManyFlightsBetween("Dubai"));
+        hongKongAirport();
+        makeFullAirport();
+        assertEquals(200, _hongKongAirport.howManyFlightsBetween("Dubai"));
     }
 
     @Test
@@ -399,15 +501,16 @@ public class AirportTester {
         // tokyo and berlin share the same number, tokyo is before though
         flightBoardTokyo.removeFlight(flight28);
         assertEquals("Berlin", flightBoardTokyo.mostPopularDestination());
-        Airport airportNone = new Airport("Tel-Aviv");
-        assertNull(airportNone.mostPopularDestination());
-        airportNone.addFlight(flight11);
-        airportNone.addFlight(flight12);
-        airportNone.addFlight(flight1);
-        airportNone.addFlight(flight6);
-        airportNone.mostPopularDestination();
-//        assertEquals("London", airportNone.mostPopularDestination());
 
+        hongKongAirport();
+        assertNull(_hongKongAirport.mostPopularDestination());
+        _hongKongAirport.addFlight(_flight31);
+        assertEquals("Dubai", _hongKongAirport.mostPopularDestination());
+        _hongKongAirport.addFlight(_flight32);
+        _hongKongAirport.addFlight(_flight32);
+        assertEquals("Hong-Kong", _hongKongAirport.mostPopularDestination());
+        _hongKongAirport.addFlight(_flight31);
+        assertEquals("Dubai", _hongKongAirport.mostPopularDestination());
     }
 
     @Test
@@ -418,6 +521,17 @@ public class AirportTester {
         assertEquals(flight6.getPrice(), flightBoardTelAviv.mostExpensiveTicket().getPrice());
         assertEquals(flight14.getPrice(), flightBoardTokyo.mostExpensiveTicket().getPrice());
 
+        hongKongAirport();
+        resetFlightsSchedule();
+        assertNull(_hongKongAirport.mostExpensiveTicket(), "There are no flights it should return null." );
+        _hongKongAirport.addFlight(_flight31);
+        assertTrue(_hongKongAirport.mostExpensiveTicket().equals(_flight31));
+        _hongKongAirport.addFlight(_flight32);
+        assertTrue(_hongKongAirport.mostExpensiveTicket().equals(_flight31));
+        // checking aliasing
+        assertNotSame(_hongKongAirport.mostExpensiveTicket(), _hongKongAirport.getFlightsSchedule()[0], "There is an aliasing. ");
+        _hongKongAirport.addFlight(_flight33);
+        assertTrue(_hongKongAirport.mostExpensiveTicket().equals(_flight33));
 
     }
 
@@ -429,6 +543,24 @@ public class AirportTester {
         assertEquals(flight6.getFlightDuration(), flightBoardTelAviv.longestFlight().getFlightDuration());
         assertEquals(flight15.getFlightDuration(), flightBoardTokyo.longestFlight().getFlightDuration());
 
+        hongKongAirport();
+        // testing when flightsSchedule is empty
+        assertNull(_hongKongAirport.longestFlight(), "Should be null because flightSchedule is empty. why?????????");
+        // testing when flightsSchedule is full and the last flight is the longest
+        makeFullAirport();
+        _hongKongAirport.removeFlight(_flight31);
+        _hongKongAirport.addFlight(_flight32);
+        assertTrue(_hongKongAirport.longestFlight().equals(_flight32));
+        // checking aliasing
+        assertNotSame(_hongKongAirport.longestFlight(), _hongKongAirport.getFlightsSchedule()[199], "There is an aliasing, i dont know what to say");
+        // testing when there are multiple flight with the same flight duration
+        hongKongAirport();
+        _hongKongAirport.addFlight(_flight33);
+        _hongKongAirport.addFlight(_flight31);
+        assertFalse(_hongKongAirport.longestFlight().equals(_flight33));
+        hongKongAirport();
+        _hongKongAirport.addFlight(_flight31);
+        assertTrue(_hongKongAirport.longestFlight().equals(_flight31));
     }
 
     @Test
@@ -437,44 +569,79 @@ public class AirportTester {
 
         // this toStringMethod check expects another *empty* line to be printed after board shows
 
-        assertEquals(flightBoardMilan.toString(), """
-                The flights for airport Milan today are:
-                Flight from Madrid to Milan departs at 08:20. Flight is not full.
-                Flight from Milan to Paris departs at 11:55. Flight is not full.
-                Flight from Milan to Tokyo departs at 07:00. Flight is full.
-                Flight from Madrid to Milan departs at 09:30. Flight is not full.
-                Flight from Milan to London departs at 05:45. Flight is full.
-                Flight from Stockholm to Milan departs at 02:55. Flight is full.
-                Flight from Cape Town to Milan departs at 05:40. Flight is not full.
-                Flight from Milan to Tel-aviv departs at 15:45. Flight is full.
-                Flight from Istanbul to Milan departs at 06:50. Flight is full.
-                """);
+        assertEquals(flightBoardMilan.toString(), "The flights for airport Milan today are:\n" +
+            "Flight from Madrid to Milan departs at 08:20. Flight is not full.\n" +
+            "Flight from Milan to Paris departs at 11:55. Flight is not full.\n" +
+            "Flight from Milan to Tokyo departs at 07:00. Flight is full.\n" +
+            "Flight from Madrid to Milan departs at 09:30. Flight is not full.\n" +
+            "Flight from Milan to London departs at 05:45. Flight is full.\n" +
+            "Flight from Stockholm to Milan departs at 02:55. Flight is full.\n" +
+            "Flight from Cape Town to Milan departs at 05:40. Flight is not full.\n" +
+            "Flight from Milan to Tel-aviv departs at 15:45. Flight is full.\n" +
+            "Flight from Istanbul to Milan departs at 06:50. Flight is full.\n");
 
         assertEquals(flightBoardTelAviv.toString(),
-                """
-                        The flights for airport Tel-aviv today are:
-                        Flight from Amsterdam to Tel-aviv departs at 01:05. Flight is full.
-                        Flight from New-York to Tel-aviv departs at 02:25. Flight is full.
-                        Flight from Tel-aviv to Bucharest departs at 15:15. Flight is full.
-                        Flight from Tel-aviv to Barcelona departs at 06:35. Flight is not full.
-                        Flight from Amsterdam to Tel-aviv departs at 14:30. Flight is not full.
-                        Flight from Prague to Tel-aviv departs at 20:35. Flight is not full.
-                        Flight from Tel-aviv to New Delhi departs at 16:10. Flight is full.
-                        Flight from Bangkok to Tel-aviv departs at 13:30. Flight is full.
-                        Flight from Milan to Tel-aviv departs at 15:45. Flight is full.
-                        """);
+            "The flights for airport Tel-aviv today are:\n" +
+            "Flight from Amsterdam to Tel-aviv departs at 01:05. Flight is full.\n" +
+            "Flight from New-York to Tel-aviv departs at 02:25. Flight is full.\n" +
+            "Flight from Tel-aviv to Bucharest departs at 15:15. Flight is full.\n" +
+            "Flight from Tel-aviv to Barcelona departs at 06:35. Flight is not full.\n" +
+            "Flight from Amsterdam to Tel-aviv departs at 14:30. Flight is not full.\n" +
+            "Flight from Prague to Tel-aviv departs at 20:35. Flight is not full.\n" +
+            "Flight from Tel-aviv to New Delhi departs at 16:10. Flight is full.\n" +
+            "Flight from Bangkok to Tel-aviv departs at 13:30. Flight is full.\n" +
+            "Flight from Milan to Tel-aviv departs at 15:45. Flight is full.\n");
 
-        assertEquals(flightBoardTokyo.toString(), """
-                The flights for airport Tokyo today are:
-                Flight from Milan to Tokyo departs at 07:00. Flight is full.
-                Flight from Tokyo to Paris departs at 23:20. Flight is not full.
-                Flight from Tokyo to Berlin departs at 16:50. Flight is full.
-                Flight from Tokyo to Seoul departs at 04:25. Flight is not full.
-                Flight from Tokyo to Madrid departs at 19:20. Flight is full.
-                Flight from Tokyo to Berlin departs at 18:05. Flight is not full.
-                Flight from Moscow to Tokyo departs at 14:00. Flight is not full.
-                """);
+        assertEquals(flightBoardTokyo.toString(),"The flights for airport Tokyo today are:\n" +
+            "Flight from Milan to Tokyo departs at 07:00. Flight is full.\n" +
+            "Flight from Tokyo to Paris departs at 23:20. Flight is not full.\n" +
+            "Flight from Tokyo to Berlin departs at 16:50. Flight is full.\n" +
+            "Flight from Tokyo to Seoul departs at 04:25. Flight is not full.\n" +
+            "Flight from Tokyo to Madrid departs at 19:20. Flight is full.\n" +
+            "Flight from Tokyo to Berlin departs at 18:05. Flight is not full.\n" +
+            "Flight from Moscow to Tokyo departs at 14:00. Flight is not full.\n");
+
+        hongKongAirport();
+        assertNull(_hongKongAirport.toString());
+        makeFullAirport();
+        assertNotNull(_hongKongAirport.toString(), "The method returned null where it shouldn't have.");
+        assertEquals("The flights for airport Hong-Kong today are:\n" + "Flight from Hong-Kong to Dubai departs at 08:01. Flight is full.\n".repeat(200), _hongKongAirport.toString(), "The method did not return the correct string.");
     }
 
+     // Private Methods
+
+    private void makeFullFlightsScheduleAns()
+    {
+        for (int i=0; i < MAX_FLIGHTS; i++)
+        {
+            _flightsScheduleAns[i] = _flight31;
+        }
+    }
+
+    private void makeFullAirport() {
+        for (int i = 0; i < MAX_FLIGHTS; i++) {
+            _hongKongAirport.addFlight(_flight31);
+        }
+    }
+
+    private void hongKongAirport() {
+        _hongKongAirport = new Airport("Hong-Kong");
+    }
+
+    private void resetFlightsSchedule() {
+        for (int i = 0; i < MAX_FLIGHTS; i++) {
+            _flightsScheduleAns[i] = null;
+        }
+    }
+
+    private boolean equalFlightsSchedule(Flight[] schedule1, Flight[] schedule2) {
+        for (int i = 0; i < MAX_FLIGHTS - 1; i++) {
+            if (schedule1[i] == null && schedule2[i] == null) continue;
+            if ((schedule1[i] == null || schedule2[i] == null) || !schedule1[i].equals(schedule2[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 }

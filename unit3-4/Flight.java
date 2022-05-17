@@ -1,3 +1,5 @@
+import org.w3c.dom.ls.LSOutput;
+
 /**
  * Represents a flight object.
  * @author Ofek Efrat
