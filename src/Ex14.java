@@ -1,10 +1,11 @@
 // 3,5
 
 /**
- *
+ * 1)
  */
 public class Ex14 {
 
+    //TODO delete
     public static boolean what(int [][] m) {
         int n=m.length;
         for(int x=0; x<n; x++)
@@ -15,29 +16,6 @@ public class Ex14 {
                 if(m[y][x] > m[y+1][x]) return false;
         return true;
     }
-
-    public static boolean findValWhat(int[][] m, int val) {
-        if (m.length == 0) return false;
-        int lowR = 0, highR = m.length - 1, midR;
-        final int first = 0, last = m[0].length-1;
-//        int lowC = 0, highC = m.length - 1, midC = m.length/2;
-        while (lowR <= highR) {
-            midR = (lowR + highR) / 2;
-
-            if (m[midR][last] == val) return true;
-            if (m[midR][first] == val) return true;
-
-            if (m[midR][last] > val) {
-                if (m[midR][first] < val)
-                    return binarySearch(m[midR], val);
-                else // for clarity (m[midR][first] > val)
-                    highR = midR - 1;
-            }
-            else // (m[midR][last] < val)
-                lowR = midR + 1;
-        }
-        return false;
-    }// final?
 
     private static boolean binarySearch(int[] a, int target) {
         int low=0, high=a.length-1, mid;
@@ -55,8 +33,50 @@ public class Ex14 {
         return false;
     } // this algorithm's time complexity is O(logn)
 
+    //TODO test!
+    public static boolean findValWhat(int[][] m, int val) {
+        if (m.length == 0) return false;
+        int lowR = 0, highR = m.length - 1, midR;
+        final int first = 0, last = m[0].length-1;
+        while (lowR <= highR) {
+            midR = (lowR + highR) / 2;
 
+            if (m[midR][first] <= val && m[midR][last] >= val) // val is in this row, if at all
+                return binarySearch(m[midR], val);
+            if (m[midR][first] > val)
+                highR = midR - 1;
+            if (m[midR][last] < val)
+                lowR = midR + 1;
+        }
+        return false;
+    }// final?
 
+    //TODO test!
+    public static boolean findTestValue(int[][] m, int val) {
+        if (m.length == 0) return false;
+        int lowR = 0, highR = m.length - 1, midR;
+        final int first = 0, last = m[0].length-1;
+        while (lowR <= highR) { // O(logn)
+            midR = (lowR + highR) / 2;
+
+            if (m[midR][first] <= val && m[midR+1][first] >= val) {// val is in one of these rows
+                for (int i = 0; i < m.length; i++) { // O(n)
+                    if (m[midR][i] == val) return true;
+                    if (m[midR+1][i] == val) return true;
+                }
+                return false;
+            }
+
+            if (m[midR][first] > val)
+                highR = midR - 1;
+
+            if (m[midR+1][first] < val)
+                lowR = midR + 1;
+        }
+        return false;
+    }
+
+    //TODO delete
     public static boolean riddle(int [][] m, int val) {
         int n = m.length;
         for(int x=0; x<n; x++)
@@ -65,8 +85,7 @@ public class Ex14 {
         return false;
     }
 
-
-
+    //TODO delete
     public static boolean test(int [][] m) {
         int n=m.length;
         for(int r=0; r<(n-1); r++)
@@ -76,6 +95,7 @@ public class Ex14 {
         return true;
     }
 
+    //TODO delete
     public static void main(String[] args) {
         int[][] a = new int[4][4];
         for (int i = 0; i < a.length; i++) {
