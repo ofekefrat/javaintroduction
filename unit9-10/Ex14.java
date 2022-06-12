@@ -1,6 +1,5 @@
 /**
  * Question 1A: only sentences 3,5 are correct.
- *
  * @author Ofek Efrat
  * @version 19/05/22
  */
@@ -60,7 +59,7 @@ public class Ex14 {
                 return false;
             }
         }
-        for (int i = 0; i < m[0].length; i++) { // check the last row to make sure its not there (also happens once at most)
+        for (int i = 0; i < m[0].length; i++) { // check the last row to make sure it's not there (also happens once at most)
             if (m[LAST][i] == val) return true;
         }
         return false;
@@ -125,7 +124,6 @@ public class Ex14 {
     }
 
 
-
     // Question 4
     /**
      * Given a matrix exclusively filled with the values -1, 0 and 1, begins from the top left corner (mat[0][0]), and
@@ -157,7 +155,10 @@ public class Ex14 {
 
         mat[i][j] = temp; // return the cell to its original value
 
-        int max = Math.max(Math.max(left, right), down);
+        int max;
+        max = left;
+        if (right > max) max = right;
+        if (down > max) max = down;
         return max + mat[i][j];
     }
 
