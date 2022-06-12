@@ -18,5 +18,5 @@ public class Practice {
     }
 
     //Q2
-    
+
 }
