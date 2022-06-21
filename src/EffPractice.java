@@ -1,5 +1,23 @@
 public class EffPractice {
 
+    //2017a b1 90
+    public static int findSmallest(int[] a) {
+        if (a.length==0 || a[0] > 1) return 1;
+        if (a.length==1 || a[1] > 2) return 2;
+        if (a.length==2) return 3;
+        int sum=a[0] + a[1];
+        for (int i = 2; i < a.length; i++) {
+            if (a[i] > sum+1) return sum+1;
+            sum += a[i];
+        }// all the elements are 0/1/2 steps away from each other
+        return sum+1;
+    }
+
+    //2018a 91
+    public static void sortMod(int[] a, int k) {
+
+    }
+
     //2019b b3 93
     public static int shortestRoad(int[] road1, int[] road2) {
         int sum1=0, sum2=0;
@@ -71,7 +89,10 @@ public class EffPractice {
     }
     //Q3
 
-
+    //2020a 87
+    public static void printTriplets(int[] a, int num) {
+        //the bullshit
+    }
     //2020b 81
     public static void minimumSubK(int[] a, int k) {
         int min=0;

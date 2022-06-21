@@ -7,6 +7,43 @@ public class RecPractice {
         return howManySorted(n, max-1) + howManySorted(n-1, max);
     }
 
+    //2018a 91
+    public static int cheapestRoute(int[] stations) {
+        return cheapestRoute(stations, 0);
+    }
+
+    private static int cheapestRoute(int[] stations, int i) {
+        if (i == stations.length-1) return stations[i];
+        if (i == stations.length-2) return stations[i] + cheapestRoute(stations, i+1);
+        int val = stations[i];
+
+        return Math.min(val + cheapestRoute(stations, i+1), val + cheapestRoute(stations, i+2));
+    }
+
+    //2019b 85
+    public static int howManyPaths(int[][] mat) {
+        return howManyPaths(mat, 0, 0);
+    }
+
+    private static int howManyPaths(int[][] mat, int i, int j) {
+        if (i >= mat.length || j >= mat[0].length ||
+            i < 0 || j < 0) return 0;
+        if (mat[i][j] == 0) return 0;
+        if (i == mat.length-1 && j == mat[0].length-1) return 1;
+        int val = mat[i][j];
+
+        mat[i][j] = 0;
+
+        int right = howManyPaths(mat, i, j+val); // mat[i].length-1 - val + j;
+        int left = howManyPaths(mat, i, j-val); // i-1 - val;
+        int down = howManyPaths(mat, i+val, j); // mat.length-1 - val + i;
+        int up = howManyPaths(mat, i-val, j); // i-1 - val;
+
+        mat[i][j] = val;
+
+        return right+left+down+up;
+    }
+
 
     //2019b b3 93
     public static boolean isSum(int[] a, int num) {
