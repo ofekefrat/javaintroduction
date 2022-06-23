@@ -69,7 +69,7 @@ public class RecPractice {
         if (i==j) return 1;
         if (i > j) return 0;
 
-        int count=0;
+        int count;
         if (a[i] == a[j])
             count = 2 + longestPalindrome(a, i+1, j-1);
         else
@@ -91,5 +91,19 @@ public class RecPractice {
         int total2 = mat[i][j] + minPrice(mat, i+1, j+1);
 
         return Math.min(total1, total2);
+    }
+
+    //not sure
+    public static boolean covers(int[][] mat, int[] a, int k) {
+        return covers(mat, a, k, 0, 0, 0);
+    }
+
+    private static boolean covers(int[][] mat, int[] a, int k, int i, int j, int ai) {
+        if (i == mat.length || i > k-1) return false;
+        if (ai == a.length) return true;
+
+        if (j == mat[0].length) return covers(mat, a, k, i+1, 0, ai);
+        if (a[ai] == mat[i][j]) return covers(mat, a, k, 0, 0, ai+1);
+        return covers(mat, a, k, i, j+1, ai);
     }
 }

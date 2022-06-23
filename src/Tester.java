@@ -1,13 +1,12 @@
 public class Tester {
     public static void main(String[] args) {
-        int[] a = {2,8,3,4,7,1,3,2};
-        int[][] mat = {{1, 3, 1, 6},
-                      {2, 8, 1, 2},
-                      {6, 2, 7, 5},
-                      {2, 4, 1, 3}};
+        int[] a = {7, 2, 3};
+        int[][] mat = {{1, 5, 7},
+                      {4, 2, 9},
+                      {1, 2, 3}};
 
 //        EffPractice.minimumSubK(b, 4);
-        int res = RecPractice.cheapestRoute(a);
+        boolean res = RecPractice.covers(mat, a, 2);
         System.out.println(res);
 
     }
