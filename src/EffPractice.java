@@ -1,10 +1,27 @@
-public class EffPractice {
+public class EffPractice extends RecPractice {
+
+    public EffPractice() {
+//        _x1=0; // PRIVATE
+        _default =0;
+        _public =0;
+        _protected =0;
+
+        RecPractice r = new RecPractice();
+
+//        r._x1=0; // PRIVATE
+        r._default =0;
+        r._public =0;
+        r._protected =0;
+
+        EffPractice eff = new EffPractice();
+        RecPractice rec = eff;
+    }
 
     //2017a b1 90
-    public static int findSmallest(int[] a) {
+    public static int findSmallest(int[] a) { // O(n)
         if (a.length==0 || a[0] > 1) return 1;
         if (a.length==1 || a[1] > 2) return 2;
-        if (a.length==2) return 3;
+        if (a.length==2) return 4;
         int sum=a[0] + a[1];
         for (int i = 2; i < a.length; i++) {
             if (a[i] > sum+1) return sum+1;
@@ -158,4 +175,30 @@ public class EffPractice {
 
         return false;
     }
+
+    //dunno
+//    public static int getMedian(int[] a, int[] b) {
+//        int totalLength = a.length + b.length;
+//        if (a[a.length-1] <= b[0]) {
+//            if (totalLength%2==0) return (a[a.length-1] + b[0])/2;
+//            else return
+//        }
+//        if (b[b.length-1] <= a[0]) return (b[b.length-1] + a[0])/2;
+//        int aMedian, bMedian;
+//
+//        int midA = (a.length-1)/2, midB = (b.length-1)/2;
+//
+//        if (a.length % 2 == 0) {
+//            aMedian = (a[midA] + a[midA+1])/2;
+//        }
+//        else aMedian = a[midA];
+//
+//        int low=0, high=a.length-1, mid;
+//        while (low <= high) {
+//            mid = (low+high)/2;
+//
+//            if (aMedian)
+//        }
+//
+//    }
 }

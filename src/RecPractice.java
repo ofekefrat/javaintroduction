@@ -1,5 +1,17 @@
 public class RecPractice {
 
+    private int _private;
+    int _default;
+    public int _public;
+    protected int _protected;
+
+    public RecPractice() {
+        _private = 0;
+        _default = 0;
+        _public = 0;
+        _protected = 0;
+    }
+
     //2018a a6 87
     public static int howManySorted(int n, int max) {
         if (n == 1) return max;
